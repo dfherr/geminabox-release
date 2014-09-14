@@ -1,7 +1,7 @@
 geminabox-release
 =================
 
-This gem is a dependency free option to modify your bundlers gem release task to work with your geminabox server.
+This gem is a dependency free option to modify your bundler rake release task to work with your geminabox server.
 
 ## How to use
 
