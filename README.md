@@ -26,4 +26,7 @@ The order is important as requiring bunlder/gem_tasks creates the rake tasks and
 
 # LICENSE
 
+Copyright (c) 2014 Dennis-Florian Herr @ Experteer GmbH
+
 see {LICENSE}
+
