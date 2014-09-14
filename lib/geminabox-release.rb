@@ -67,7 +67,7 @@ module GeminaboxRelease
         req["Content-Type"] = "multipart/form-data; boundary=#{boundary}"
         response = http.request(req)
         if response.code.to_i < 300
-          puts response.body
+          Bundler.ui.confirm("Gem #{File.basename(path)} received and indexed.")
         else
           raise "Error (#{response.code} received)\n\n#{response.body}"
         end
