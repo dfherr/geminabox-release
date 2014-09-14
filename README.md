@@ -25,7 +25,7 @@ The order is important as requiring bunlder/gem_tasks creates the rake tasks and
 
 ## Safety
 
-To ensure you are not accidently pushing your gem to rubygems there are two distinct safety messures.
+To ensure you are not accidently pushing your gem to rubygems there are two distinct safety measures.
 
 1) The rake release task is renamed to rake release:inabox, do not use rake release if you want to push to geminabox.
 
