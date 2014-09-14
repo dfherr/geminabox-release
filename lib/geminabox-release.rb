@@ -7,13 +7,8 @@ module GeminaboxRelease
     @host
   end
 
-  def self.options
-    @options
-  end
-
-  def self.patch(host, options = {})
+  def self.patch(host)
     @host = host
-    @options = options
 
     Bundler::GemHelper.class_eval do
       def install
@@ -38,9 +33,6 @@ module GeminaboxRelease
       end
 
       def rubygem_push(path)
-        puts ARGV[0]
-        puts ARGV[1]
-        puts ARGV[1]
         uri = URI.parse(GeminaboxRelease.host)
         username = uri.user
         password = uri.password
@@ -64,7 +56,7 @@ module GeminaboxRelease
         post_body << "\r\n--#{boundary}\r\n"
         post_body << "Content-Disposition: form-data; name=\"overwrite\"\r\n"
         post_body << "\r\n"
-        post_body << "#{!!GeminaboxRelease.options[:overwrite]}"
+        post_body << "false"
         post_body << "\r\n--#{boundary}--\r\n\r\n"
 
         http = Net::HTTP.new(uri.host, uri.port)
