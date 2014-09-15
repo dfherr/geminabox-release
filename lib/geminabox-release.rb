@@ -22,7 +22,6 @@ module GeminaboxRelease
       raise "Please provide a host to upload to."
     end
 
-
     Bundler::GemHelper.class_eval do
 
       alias_method :bundler_install, :install
@@ -108,7 +107,10 @@ module GeminaboxRelease
         end
       end
 
-    end
+    end  # end of class_eval
+
+    # initialize patched gem tasks
+    require 'bundler/gem_tasks'
 
   end
 end
