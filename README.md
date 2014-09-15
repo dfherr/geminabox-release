@@ -1,5 +1,6 @@
 geminabox-release
 =================
+[![Gem Version](https://badge.fury.io/rb/geminabox-release.png)](http://badge.fury.io/rb/geminabox-release)
 
 This gem is a dependency free option to add a rake inabox:release task to bundler gem_tasks for releasing a new gem to
  your geminabox server. 
