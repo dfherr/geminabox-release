@@ -11,28 +11,29 @@ module GeminaboxRelease
     @host = host
 
     Bundler::GemHelper.class_eval do
+
+      alias_method :bundler_install, :install
+
       def install
-        built_gem_path = nil
-
-        desc "Build #{name}-#{version}.gem into the pkg directory."
-        task 'build' do
-          built_gem_path = build_gem
-        end
-
-        desc "Build and install #{name}-#{version}.gem into system gems."
-        task 'install' => 'build' do
-          install_gem(built_gem_path)
-        end
-
         desc "Create tag #{version_tag} and build and push #{name}-#{version}.gem to #{GeminaboxRelease.host}"
-        task 'release:inabox' => 'build' do
-          release_gem(built_gem_path)
+        task 'inabox:release' => 'build' do
+          release_inabox(built_gem_path)
         end
-
-        Bundler::GemHelper.instance = self
+        bundler_install # call bunlders original install method
       end
 
-      def rubygem_push(path)
+      # same functionality as release_gem but calls inabox_push
+      def release_inabox(built_gem_path=nil)
+        guard_clean
+        built_gem_path ||= build_gem
+        tag_version { git_push } unless already_tagged?
+        inabox_push(built_gem_path) if gem_push?
+      end
+
+      protected
+
+      # pushes to geminabox
+      def inabox_push(path)
         uri = URI.parse(GeminaboxRelease.host)
         username = uri.user
         password = uri.password
