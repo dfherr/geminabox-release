@@ -60,5 +60,5 @@ To ensure you are not accidently pushing your gem to rubygems there are two dist
 
 Copyright (c) 2014 Dennis-Florian Herr @ Experteer GmbH
 
-see {LICENSE}
+see [LICENSE](LICENSE)
 
