@@ -28,17 +28,19 @@ module GeminaboxRelease
       alias_method :bundler_install, :install
 
       def install
+
         desc "Create tag #{version_tag} and build and push #{name}-#{version}.gem to #{GeminaboxRelease.host}"
-        task 'inabox:release' => 'build' do
-          release_inabox(built_gem_path)
+        task 'inabox:release' do
+          release_inabox
         end
+
         bundler_install # call bunlders original install method
       end
 
       # same functionality as release_gem but calls inabox_push
-      def release_inabox(built_gem_path=nil)
+      def release_inabox
         guard_clean
-        built_gem_path ||= build_gem
+        built_gem_path = build_gem
         tag_version { git_push } unless already_tagged?
         inabox_push(built_gem_path) if gem_push?
       end
@@ -81,7 +83,11 @@ module GeminaboxRelease
         req["Content-Type"] = "multipart/form-data; boundary=#{boundary}"
         response = http.request(req)
         if response.code.to_i < 300
-          Bundler.ui.confirm("Gem #{File.basename(path)} received and indexed.")
+          if response.body.start_with?("Gem #{File.basename(path)} received and indexed")
+            Bundler.ui.confirm("Gem #{File.basename(path)} received and indexed.")
+          else
+            Bundler.ui.error "Error received\n\n#{response.body}"
+          end
         else
           raise "Error (#{response.code} received)\n\n#{response.body}"
         end
