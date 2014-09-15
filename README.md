@@ -1,12 +1,12 @@
 geminabox-release
 =================
 
-This gem is a dependency free option to add a rake inabox:release task that mirrors bundler's rake release task for your
-geminabox server.
+This gem is a dependency free option to add a rake inabox:release task to bundler gem_tasks to release a new gem to
+ your geminabox server. 
 
 ## How to use
 
-Simply load this gem and and patch with your geminabox URL before requiring bundler/gem_tasks in your Rakefile.
+Simply load this gem and patch with your geminabox URL before requiring bundler/gem_tasks in your Rakefile.
 
 E.g.
 
