@@ -39,7 +39,7 @@ The order is important as requiring bunlder/gem_tasks creates the rake tasks and
 
 ### Additional tasks
 
-The gem additionally provides tasks for build & push without all the overhead release produces (like tagging and pushing):
+The gem additionally provides tasks for build & push without all the overhead release produces (like git tag and git push):
 
 ```Shell
 $> rake inabox:push          # just builds gem and pushes to geminabox server
