@@ -12,7 +12,16 @@ E.g.
 
 ```
 require 'geminabox-release'
-GeminaboxRelease.patch("http://localhost:4000")
+GeminaboxRelease.patch(:host => "http://localhost:4000")
+require 'bundler/gem_tasks'
+
+```
+
+or use your geminabox config file (YAML file with key :host and host url as value in ~/.gem/geminabox)
+
+```
+require 'geminabox-release'
+GeminaboxRelease.patch(:use_config => true)
 require 'bundler/gem_tasks'
 
 ```
@@ -21,6 +30,8 @@ Then you will get an rake inabox:release task.
 
 The gem (theoretically) supports basic auth like geminabox in the host address. e.g. http://username:password@localhost:4000
 It's untested as we didn't need it. Feel free to try it.
+
+### Order
 
 The order is important as requiring bunlder/gem_tasks creates the rake tasks and this gem does not modify them after that.
 

@@ -7,8 +7,21 @@ module GeminaboxRelease
     @host
   end
 
-  def self.patch(host)
-    @host = host
+  def self.patch(options = {})
+    if options[:host]
+      @host = options[:host]
+    elsif options[:use_config]
+      require 'yaml'
+      data = YAML.load_file(File.expand_path("~/.gem/geminabox"))
+      if data.has_key?(:host)
+        @host = data[:host]
+      else
+        raise "Please set your host in your geminabox config ~/.gem/geminabox"
+      end
+    else
+      raise "Please provide a host to upload to."
+    end
+
 
     Bundler::GemHelper.class_eval do
 
