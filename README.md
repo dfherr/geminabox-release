@@ -1,7 +1,7 @@
 geminabox-release
 =================
 
-This gem is a dependency free option to add a rake inabox:release task to bundler gem_tasks to release a new gem to
+This gem is a dependency free option to add a rake inabox:release task to bundler gem_tasks for releasing a new gem to
  your geminabox server. 
 
 ## How to use
@@ -30,6 +30,14 @@ Then you will get an rake inabox:release task.
 
 The gem (theoretically) supports basic auth like geminabox in the host address. e.g. http://username:password@localhost:4000
 It's untested as we didn't need it. Feel free to try it.
+
+The gem additionally provides only build & push tasks:
+
+```
+$ rake inabox:push  # just builds gem and pushes to geminabox server
+$ rake inabox:forcepush  # builds gem and pushes to geminabox server overwriting existing same version
+
+```
 
 ### Order
 

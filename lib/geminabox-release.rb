@@ -34,6 +34,16 @@ module GeminaboxRelease
           release_inabox
         end
 
+        desc "Build & push #{name}-#{version}.gem to #{GeminaboxRelease.host}"
+        task 'inabox:push' do
+          push_inabox_gem
+        end
+
+        desc "Build & push #{name}-#{version}.gem overwriting same version to #{GeminaboxRelease.host}"
+        task 'inabox:forcepush' do
+          push_inabox_gem(true)
+        end
+
         bundler_install # call bunlders original install method
       end
 
@@ -45,10 +55,15 @@ module GeminaboxRelease
         inabox_push(built_gem_path) if gem_push?
       end
 
+      def push_inabox_gem(force = false)
+        built_gem_path = build_gem
+        inabox_push(built_gem_path, force)
+      end
+
       protected
 
       # pushes to geminabox
-      def inabox_push(path)
+      def inabox_push(path, force = false)
         uri = URI.parse(GeminaboxRelease.host)
         username = uri.user
         password = uri.password
@@ -72,7 +87,7 @@ module GeminaboxRelease
         post_body << "\r\n--#{boundary}\r\n"
         post_body << "Content-Disposition: form-data; name=\"overwrite\"\r\n"
         post_body << "\r\n"
-        post_body << "false"
+        post_body << "#{force}"
         post_body << "\r\n--#{boundary}--\r\n\r\n"
 
         http = Net::HTTP.new(uri.host, uri.port)
