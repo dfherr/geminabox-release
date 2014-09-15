@@ -41,9 +41,9 @@ The order is important as requiring bunlder/gem_tasks creates the rake tasks and
 
 The gem additionally provides tasks for build & push without all the overhead release produces (like tagging and pushing):
 
-```shell
-$ rake inabox:push  # just builds gem and pushes to geminabox server
-$ rake inabox:forcepush  # builds gem and pushes to geminabox server overwriting existing same version
+```Shell
+$> rake inabox:push          # just builds gem and pushes to geminabox server
+$> rake inabox:forcepush     # builds gem and pushes to geminabox server overwriting existing same version
 
 ```
 
