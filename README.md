@@ -29,7 +29,7 @@ GeminaboxRelease.patch(:use_config => true)
 
 ```
 
-Then you will get an rake inabox:release task.
+Then you will get a rake inabox:release task.
 
 The gem (theoretically) supports basic auth like geminabox in the host address. e.g. http://username:password@localhost:4000
 It's untested as we didn't need it. Feel free to try it.
