@@ -49,7 +49,7 @@ $> rake inabox:forcepush     # builds gem and pushes to geminabox server overwri
 
 ## Safety
 
-To ensure you are not accidently pushing your gem to rubygems there are two distinct safety measures.
+To ensure you are not accidentally pushing your gem to rubygems there are two distinct safety measures.
 
 1) The rake task has another name. Do not use rake release if you want to push to your geminabox server!
 
