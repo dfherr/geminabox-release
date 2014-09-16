@@ -59,8 +59,6 @@ To ensure you are not accidentally pushing your gem to rubygems there are two di
 
 If the rake tasks do not show check if you required "bundler/gem_tasks" anywhere before requiring geminabox-release.
 
-For older ruby versions which do not ship bundler, you need to have bundler installed.
-
 # LICENSE
 
 Copyright (c) 2014 Dennis-Florian Herr @ Experteer GmbH
