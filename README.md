@@ -5,6 +5,8 @@ geminabox-release
 This gem is a dependency free option to add a rake inabox:release task to bundler gem_tasks for releasing a new gem to
  your geminabox server. 
  
+ The gem only uses the ruby default libaries uri and net/http and expects you are using bundler.
+ 
  
 You no longer need to require "bundler/gem_tasks". The gem does it for you. Make sure you do not require bundler/gem_tasks
 anywhere before geminabox-release gets required.
@@ -56,6 +58,8 @@ To ensure you are not accidently pushing your gem to rubygems there are two dist
 ### Troubleshooting
 
 If the rake tasks do not show check if you required "bundler/gem_tasks" anywhere before requiring geminabox-release.
+
+For older ruby versions which do not ship bundler, you need to have bundler installed.
 
 # LICENSE
 
