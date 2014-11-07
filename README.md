@@ -8,8 +8,7 @@ This gem is a dependency free option to add a rake inabox:release task to bundle
  The gem only uses the ruby default libaries uri and net/http and expects you are using bundler.
  
  
-You no longer need to require "bundler/gem_tasks". The gem does it for you. Make sure you do not require bundler/gem_tasks
-anywhere before geminabox-release gets required.
+You must no longer require "bundler/gem_tasks" as geminabox-release requires a modified version for you which supports all other functionality!
 
 ## How to use
 
@@ -32,6 +31,8 @@ GeminaboxRelease.patch(:use_config => true)
 ```
 
 Then you will get a rake inabox:release task.
+
+**Ensure you do not _require "bundler/gem_tasks"_ in your rakefile anymore!**
 
 The gem (theoretically) supports basic auth like geminabox in the host address. e.g. http://username:password@localhost:4000
 It's untested as we didn't need it. Feel free to try it.
