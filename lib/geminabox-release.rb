@@ -3,23 +3,55 @@ require 'net/http'
 
 module GeminaboxRelease
 
+  class GeminaboxRelease::Error < StandardError;  end
+  class GeminaboxRelease::NoHost < GeminaboxRelease::Error
+    def initialize(msg = "")
+      if msg.empty?
+        msg = "Please provide a host to upload to, via :host or :use_config option."
+      end
+      super(msg)
+    end
+  end
+
+  class GeminaboxRelease::NoConfigFile < GeminaboxRelease::Error
+    def initialize(msg = "")
+      if msg.empty?
+        msg = "Please provide a geminabox config file in ~/.gem/geminabox to use :use_config option.\n"
+        msg += "The config file should be YAML with an host entry, e.g.\n \":host: http://your.host.tld:optional-port\""
+      end
+      super(msg)
+    end
+  end
+
+  class GeminaboxRelease::InvalidConfig < GeminaboxRelease::Error
+    def initialize(msg = "")
+      if msg.empty?
+        msg = "Please set your host in your geminabox config (in ~/.gem/geminabox).\n"
+        msg += "The config file should be YAML with an host entry, e.g.\n \":host: http://your.host.tld:optional-port\""
+      end
+      super(msg)
+    end
+  end
+
   def self.host
     @host
   end
 
   def self.patch(options = {})
+    begin
     if options[:host]
       @host = options[:host]
     elsif options[:use_config]
       require 'yaml'
+      raise GeminaboxRelease::NoConfigFile unless File.exist?(File.expand_path("~/.gem/geminabox"))
       data = YAML.load_file(File.expand_path("~/.gem/geminabox"))
       if data.has_key?(:host)
         @host = data[:host]
       else
-        raise "Please set your host in your geminabox config ~/.gem/geminabox"
+        raise GeminaboxRelease::InvalidConfig
       end
     else
-      raise "Please provide a host to upload to."
+      raise GeminaboxRelease::NoHost
     end
 
     Bundler::GemHelper.class_eval do
@@ -112,5 +144,11 @@ module GeminaboxRelease
     # initialize patched gem tasks
     require 'bundler/gem_tasks'
 
+    end
+  rescue GeminaboxRelease::Error => e
+    # \033[31m RED, \033[1m BOLD, \033[22m BOLD OFF, \033[0m COLOR OFF
+    STDERR.puts "\033[31mGeminaboxRelease Exception: \033[1m#{e.class.to_s}\033[22m\033[0m"
+    STDERR.puts "\033[31m#{e.message}\033[0m"
   end
+
 end
