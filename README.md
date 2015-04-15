@@ -34,14 +34,16 @@ GeminaboxRelease.patch(:use_config => true)
 
 ```
 
-If you wish to remove the bundler/gem_tasks rake release task you can by adding :remove_release to the patch options:
+Then you will get a rake inabox:release task.
+
+
+If you wish to remove the bundler/gem_tasks rake release task, you can by adding `:remove_release` to the patch options:
 
 ```ruby
 GeminaboxRelease.patch(:remove_release => true)
 
 ```
 
-Then you will get a rake inabox:release task.
 
 **Ensure you do not _require "bundler/gem_tasks"_ in your rakefile anymore!**
 
@@ -66,6 +68,8 @@ To ensure you are not accidentally pushing your gem to rubygems there are two di
 1) The rake task has another name. Do not use rake release if you want to push to your geminabox server!
 
 2) The gem is pushed via the HTTP POST file request geminabox expects and not via the gem push interface.
+
+3) You can even fully remove the rake release task, if you wish to.
 
 ### Troubleshooting
 
