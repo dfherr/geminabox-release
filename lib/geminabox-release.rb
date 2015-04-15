@@ -144,7 +144,17 @@ module GeminaboxRelease
     # initialize patched gem tasks
     require 'bundler/gem_tasks'
 
+    # delete the rake release task if option is enabled
+    if options[:remove_release]
+      Rake::TaskManager.class_eval do
+        def remove_task(task_name)
+          @tasks.delete(task_name.to_s)
+        end
+      end
+      Rake.application.remove_task('release')
     end
+
+  end
   rescue GeminaboxRelease::Error => e
     # \033[31m RED, \033[1m BOLD, \033[22m BOLD OFF, \033[0m COLOR OFF
     STDERR.puts "\033[31mGeminaboxRelease Exception: \033[1m#{e.class.to_s}\033[22m\033[0m"

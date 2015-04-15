@@ -1,11 +1,15 @@
 geminabox-release
 =================
+
+This is for all users of a geminabox-server who do use bundler and rake, but do not want to install geminabox and all it's
+dependencies locally just to have a gem push command.
+
 [![Gem Version](https://badge.fury.io/rb/geminabox-release.png)](http://badge.fury.io/rb/geminabox-release)
 
-This gem is a dependency free option to add a rake inabox:release task to bundler gem_tasks for releasing a new gem to
+The gem is a dependency free option to add a rake inabox:release task to bundler gem_tasks for releasing a new gem to
  your geminabox server. 
  
- The gem only uses the ruby default libaries uri and net/http and expects you are using bundler.
+It only uses the ruby default libaries uri and net/http and expects you are using bundler.
  
  
 You must no longer require "bundler/gem_tasks" as geminabox-release requires a modified version for you which supports all other functionality!
@@ -27,6 +31,13 @@ or use your geminabox config file (YAML file with key :host and host url as valu
 ```ruby
 require 'geminabox-release'
 GeminaboxRelease.patch(:use_config => true)
+
+```
+
+If you wish to remove the bundler/gem_tasks rake release task you can by adding :remove_release to the patch options:
+
+```ruby
+GeminaboxRelease.patch(:remove_release => true)
 
 ```
 
@@ -58,7 +69,7 @@ To ensure you are not accidentally pushing your gem to rubygems there are two di
 
 ### Troubleshooting
 
-If the rake tasks do not show check if you required "bundler/gem_tasks" anywhere before requiring geminabox-release.
+If the rake tasks do not show make sure you did not require "bundler/gem_tasks" anywhere (espacially before requiring geminabox-release).
 
 # LICENSE
 
