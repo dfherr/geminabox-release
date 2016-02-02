@@ -13,7 +13,7 @@ Gem::Specification.new do |spec|
   spec.license       = "MIT"
 
   spec.files         = Dir["lib/**/*"]
-  spec.files        += [".gitignore", ".ruby-version", "Gemfile", "geminabox-release.gemspec", "README.md", "Rakefile", "LICENSE"]
+  spec.files        += [".gitignore", "Gemfile", "geminabox-release.gemspec", "README.md", "Rakefile", "LICENSE"]
   spec.require_paths = ["lib"]
 
 end
