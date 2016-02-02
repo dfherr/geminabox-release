@@ -41,6 +41,8 @@ module GeminaboxRelease
     begin
     if options[:host]
       @host = options[:host]
+    elsif options[:ssl_dont_verify]
+      @ssl_verify = options[:ssl_dont_verify]
     elsif options[:use_config]
       require 'yaml'
       raise GeminaboxRelease::NoConfigFile unless File.exist?(File.expand_path("~/.gem/geminabox"))
@@ -123,6 +125,7 @@ module GeminaboxRelease
 
         http = Net::HTTP.new(uri.host, uri.port)
         http.use_ssl = (uri.scheme == 'https')
+        http.verify_mode = OpenSSL::SSL::VERIFY_NONE if @ssl_dont_verify
         req = Net::HTTP::Post.new(uri.request_uri)
         req.body = post_body.join
         req.basic_auth(username, password) unless username.nil? || username.empty?
