@@ -54,7 +54,7 @@ module GeminaboxRelease
       raise GeminaboxRelease::NoHost
     end
     if options[:ssl_dont_verify]
-      @ssl_verify = options[:ssl_dont_verify]
+      @ssl_dont_verify = options[:ssl_dont_verify]
     end
 
     Bundler::GemHelper.class_eval do
