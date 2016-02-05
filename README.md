@@ -7,7 +7,7 @@ dependencies locally just to have a gem push command.
 [![Gem Version](https://badge.fury.io/rb/geminabox-release.png)](http://badge.fury.io/rb/geminabox-release)
 
 If you use bundler, this gem is a dependency free option to add a rake inabox:release task to bundler gem_tasks for releasing a new gem to
- your geminabox server. 
+ your geminabox server instead of rubygems.
  
 It only uses the ruby default libaries uri and net/http and expects you are using bundler.
  
