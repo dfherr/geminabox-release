@@ -36,6 +36,17 @@ GeminaboxRelease.patch(:use_config => true)
 
 Then you will get a rake inabox:release task.
 
+If your geminabox server is using SSL/TLS, but you have an untrusted certificate, you can use the option `ssl_dont_verify`.
+
+E.g.
+
+```ruby
+require 'geminabox-release'
+GeminaboxRelease.patch(:host => "https://localhost:4000", :ssl_dont_verify => true)
+```
+
+However, that is _NOT_ recommended.
+
 
 If you wish to remove the bundler/gem_tasks rake release task, you can by adding `:remove_release` to the patch options:
 

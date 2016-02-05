@@ -1,5 +1,5 @@
 require 'uri'
-require 'net/http'
+require 'net/https'
 
 module GeminaboxRelease
 
@@ -52,6 +52,9 @@ module GeminaboxRelease
       end
     else
       raise GeminaboxRelease::NoHost
+    end
+    if options[:ssl_dont_verify]
+      @ssl_dont_verify = options[:ssl_dont_verify]
     end
 
     Bundler::GemHelper.class_eval do
@@ -122,6 +125,10 @@ module GeminaboxRelease
         post_body << "\r\n--#{boundary}--\r\n\r\n"
 
         http = Net::HTTP.new(uri.host, uri.port)
+        if uri.scheme == 'https'
+          http.use_ssl = true
+          http.verify_mode = OpenSSL::SSL::VERIFY_NONE if @ssl_dont_verify
+        end
         req = Net::HTTP::Post.new(uri.request_uri)
         req.body = post_body.join
         req.basic_auth(username, password) unless username.nil? || username.empty?
