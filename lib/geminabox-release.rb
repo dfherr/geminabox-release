@@ -1,3 +1,4 @@
+require 'bundler'
 require 'uri'
 require 'net/https'
 
