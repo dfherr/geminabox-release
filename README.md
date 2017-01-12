@@ -9,7 +9,7 @@ dependencies locally just to have a gem push command.
 If you use bundler, this gem is a dependency free option to add a rake inabox:release task to bundler gem_tasks for releasing a new gem to
  your geminabox server instead of rubygems.
  
-It only uses the ruby default libaries uri and net/http and bundler.
+It only uses the ruby default libaries uri, net/http and the bundler gem.
  
  
 You must no longer require "bundler/gem_tasks" as geminabox-release requires a modified version for you which supports all other functionality!
