@@ -1,5 +1,6 @@
 require 'uri'
 require 'net/https'
+require 'bundler'
 
 module GeminaboxRelease
 
