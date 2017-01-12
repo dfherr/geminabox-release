@@ -1,14 +1,20 @@
 PATH
   remote: .
   specs:
-    geminabox-release (0.1.0)
+    geminabox-release (0.2.0)
+      bundler (>= 1.0.14)
 
 GEM
   remote: https://rubygems.org/
   specs:
+    rake (10.1.0)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
   geminabox-release!
+  rake
+
+BUNDLED WITH
+   1.13.7
