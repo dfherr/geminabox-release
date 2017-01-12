@@ -15,6 +15,8 @@ Gem::Specification.new do |spec|
   spec.files         = Dir["lib/**/*"]
   spec.files        += [".gitignore", "Gemfile", "geminabox-release.gemspec", "README.md", "Rakefile", "LICENSE"]
   spec.require_paths = ["lib"]
+  
+  spec.add_runtime_dependency "bundler", ">= 1.0.14"
 
 end
 
