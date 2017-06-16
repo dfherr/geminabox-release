@@ -16,25 +16,35 @@ You must no longer require "bundler/gem_tasks" as geminabox-release requires a m
 
 ## How to use
 
-Simply load this gem and patch with your geminabox URL in your Rakefile. 
-
-E.g.
+Simply load this gem and patch with your geminabox URL in your Rakefile:
 
 ```ruby
 require 'geminabox-release'
 GeminaboxRelease.patch(:host => "http://localhost:4000")
-
 ```
 
-or use your geminabox config file (YAML file with key :host and host url as value in ~/.gem/geminabox)
+Then you will get a rake `inabox:release` task.
 
+If your server requires basic authentication for the deployment, you can specify `:username` and `:password` as well.
+
+### Global Defaults
+
+You can store global defaults in `~/.gem/geminabox`, for instance:
+```yaml
+:host: "http://localhost:4000"
+:username: "peter.pan"
+:password: "secret"
+```
+Apply them by passing the `:use_config` flag:
 ```ruby
 require 'geminabox-release'
 GeminaboxRelease.patch(:use_config => true)
 
 ```
 
-Then you will get a rake inabox:release task.
+If an attribute is present in the global configuration, and also passed to the `GeminaboxRelease.patch` call, the latter takes precedence.
+
+### SSL
 
 If your geminabox server is using SSL/TLS, but you have an untrusted certificate, you can use the option `ssl_dont_verify`.
 
@@ -47,6 +57,7 @@ GeminaboxRelease.patch(:host => "https://localhost:4000", :ssl_dont_verify => tr
 
 However, that is _NOT_ recommended.
 
+### Bundler's `release` Task
 
 If you wish to remove the bundler/gem_tasks rake release task, you can by adding `:remove_release` to the patch options:
 
@@ -55,11 +66,7 @@ GeminaboxRelease.patch(:remove_release => true)
 
 ```
 
-
 **Ensure you do not _require "bundler/gem_tasks"_ in your rakefile anymore!**
-
-The gem (theoretically) supports basic auth like geminabox in the host address. e.g. http://username:password@localhost:4000
-It's untested as we didn't need it. Feel free to try it.
 
 
 ### Additional tasks
