@@ -160,15 +160,11 @@ module GeminaboxRelease
       # extract credentials from a) our options and b) the given URI
       def credentials(uri)
         username = GeminaboxRelease.username
-        if username.nil?
-          username = uri.user
-          username = URI.unescape username unless username.nil?
-        end
-
         password = GeminaboxRelease.password
-        if password.nil?
-          password = uri.password
-          password = URI.unescape password unless password.nil?
+        
+        unless uri.user.nil? || uri.user.empty?
+          username = URI.unescape uri.user
+          password = URI.unescape uri.password
         end
         [username, password]
       end
