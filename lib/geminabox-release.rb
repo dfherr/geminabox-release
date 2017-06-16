@@ -50,6 +50,18 @@ module GeminaboxRelease
     @config[:ssl_dont_verify]
   end
 
+  # extract credentials from a) our options and b) the given URI
+  def self.credentials(uri)
+    username = GeminaboxRelease.username
+    password = GeminaboxRelease.password
+    
+    unless uri.user.nil? || uri.user.empty?
+      username = URI.unescape uri.user
+      password = URI.unescape uri.password
+    end
+    [username, password]
+  end
+
   def self.patch(options = {})
     begin
     attribute_options = [:host, :username, :password, :ssl_dont_verify]
@@ -110,7 +122,7 @@ module GeminaboxRelease
       def inabox_push(path, force = false)
         uri = URI.parse(GeminaboxRelease.host)
 
-        username, password = credentials(uri)
+        username, password = GeminaboxRelease.credentials(uri)
 
         uri.path = uri.path + "/" unless uri.path.end_with?("/")
         uri.path += "upload"
@@ -155,18 +167,6 @@ module GeminaboxRelease
         else
           raise "Error (#{response.code} received)\n\n#{response.body}"
         end
-      end
-
-      # extract credentials from a) our options and b) the given URI
-      def credentials(uri)
-        username = GeminaboxRelease.username
-        password = GeminaboxRelease.password
-        
-        unless uri.user.nil? || uri.user.empty?
-          username = URI.unescape uri.user
-          password = URI.unescape uri.password
-        end
-        [username, password]
       end
 
     end  # end of class_eval

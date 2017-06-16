@@ -27,6 +27,9 @@ Then you will get a rake `inabox:release` task.
 
 If your server requires basic authentication for the deployment, you can specify `:username` and `:password` as well.
 
+For reasons of compatibility, you can still specify the credentials in the `:host` option (e.g. `http://username:password@localhost:4000`), in which case
+they take precedence over the other parameters.
+
 ### Global Defaults
 
 You can store global defaults in `~/.gem/geminabox`, for instance:
