@@ -99,6 +99,7 @@ If the rake tasks do not show make sure you did not require "bundler/gem_tasks" 
 ## Contributors
 
 [Jens Hilligsøe](https://github.com/hilli)
+
 [Frank Schoenheit](https://github.com/frank-schoenheit-red6es)
 
 
