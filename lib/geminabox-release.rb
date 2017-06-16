@@ -35,28 +35,37 @@ module GeminaboxRelease
   end
 
   def self.host
-    @host
+    @config[:host]
+  end
+
+  def self.username
+    @config[:username]
+  end
+
+  def self.password
+    @config[:password]
+  end
+
+  def self.ssl_dont_verify
+    @config[:ssl_dont_verify]
   end
 
   def self.patch(options = {})
     begin
-    if options[:host]
-      @host = options[:host]
-    elsif options[:use_config]
+    attribute_options = [:host, :username, :password, :ssl_dont_verify]
+    @config = {}
+    # read defaults from config file, if requested
+    if options[:use_config]
       require 'yaml'
       raise GeminaboxRelease::NoConfigFile unless File.exist?(File.expand_path("~/.gem/geminabox"))
       data = YAML.load_file(File.expand_path("~/.gem/geminabox"))
-      if data.has_key?(:host)
-        @host = data[:host]
-      else
-        raise GeminaboxRelease::InvalidConfig
-      end
-    else
-      raise GeminaboxRelease::NoHost
+      attribute_options.each { |k| @config[k] = data[k] if data.has_key?(k) }
     end
-    if options[:ssl_dont_verify]
-      @ssl_dont_verify = options[:ssl_dont_verify]
-    end
+    # overwrite defaults with concrete values, if specified
+    @config.merge! options.select { |k,v| attribute_options.include? k }
+
+    # sanity checks
+    raise GeminaboxRelease::NoHost if @config[:host].nil?
 
     Bundler::GemHelper.class_eval do
 
@@ -100,8 +109,9 @@ module GeminaboxRelease
       # pushes to geminabox
       def inabox_push(path, force = false)
         uri = URI.parse(GeminaboxRelease.host)
-        username = uri.user
-        password = uri.password
+
+        username, password = credentials(uri)
+
         uri.path = uri.path + "/" unless uri.path.end_with?("/")
         uri.path += "upload"
 
@@ -128,7 +138,7 @@ module GeminaboxRelease
         http = Net::HTTP.new(uri.host, uri.port)
         if uri.scheme == 'https'
           http.use_ssl = true
-          http.verify_mode = OpenSSL::SSL::VERIFY_NONE if @ssl_dont_verify
+          http.verify_mode = OpenSSL::SSL::VERIFY_NONE if GeminaboxRelease.ssl_dont_verify
         end
         req = Net::HTTP::Post.new(uri.request_uri)
         req.body = post_body.join
@@ -145,6 +155,22 @@ module GeminaboxRelease
         else
           raise "Error (#{response.code} received)\n\n#{response.body}"
         end
+      end
+
+      # extract credentials from a) our options and b) the given URI
+      def credentials(uri)
+        username = GeminaboxRelease.username
+        if username.nil?
+          username = uri.user
+          username = URI.unescape username unless username.nil?
+        end
+
+        password = GeminaboxRelease.password
+        if password.nil?
+          password = uri.password
+          password = URI.unescape password unless password.nil?
+        end
+        [username, password]
       end
 
     end  # end of class_eval
