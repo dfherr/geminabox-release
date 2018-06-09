@@ -54,7 +54,7 @@ module GeminaboxRelease
   def self.credentials(uri)
     username = GeminaboxRelease.username
     password = GeminaboxRelease.password
-    
+
     unless uri.user.nil? || uri.user.empty?
       username = URI.unescape uri.user
       password = URI.unescape uri.password
@@ -162,7 +162,8 @@ module GeminaboxRelease
           if response.body.start_with?("Gem #{File.basename(path)} received and indexed")
             Bundler.ui.confirm("Gem #{File.basename(path)} received and indexed.")
           else
-            Bundler.ui.error "Error received\n\n#{response.body}"
+            Bundler.ui.error "Geminabox error received\n\n#{response.body}"
+            exit 1
           end
         else
           raise "Error (#{response.code} received)\n\n#{response.body}"
