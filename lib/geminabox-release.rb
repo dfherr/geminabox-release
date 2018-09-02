@@ -57,7 +57,7 @@ module GeminaboxRelease
 
     unless uri.user.nil? || uri.user.empty?
       username = URI.unescape uri.user
-      password = URI.unescape uri.password
+      password = URI.unescape uri.password || ""
     end
     [username, password]
   end
