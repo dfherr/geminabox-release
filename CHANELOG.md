@@ -1,5 +1,12 @@
 CHANGELOG
 
+## Version 1.2.1
+
+* fix error on authentication with empty password (thanks @cmer)
+
+## Version 1.2.0
+* exit with non-zero code on unsuccessful upload but successful http call
+
 ## Version 1.1.0
 
 * Improved support for basic auth

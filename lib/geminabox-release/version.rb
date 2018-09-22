@@ -1,4 +1,7 @@
 module GeminaboxRelease
+        # Version 1.2.1
+	# * fix error on authentication with empty password (thanks @cmer)
+	#
 	# Version 1.2.0
 	# * exit with non-zero code on unsuccessful upload but successful http call
 	#
@@ -11,5 +14,5 @@ module GeminaboxRelease
 	# Version 0.2.0
 	# * @hilli added support for https with optional veriy_none mode
 	#
-	VERSION = "1.2.0"
+	VERSION = "1.2.1"
 end
